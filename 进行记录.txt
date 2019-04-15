@@ -1,5 +1,23 @@
 2019/04/14
 1.看Tetris 看到了 17分钟
 学习了：
-1、canvas的初始化
+1、canvas的初始化 
+	-- fillRect() 最简单地使用canvas
 2、foreach 匿名函数遍历
+	三个参数，item index array本身，都是可选的
+	还有个this
+	如果说item为空会跳过
+	
+	console.table(array); 可以打印格式化以后的数组
+	
+
+犯了两个错误
+1、forEach e的大小写
+2、fillStyle S的大小写
+
+https://www.twle.cn/l/yufei/canvas/canvas-basic-geometric-scale.html
+但是，Canvas 中的缩放 (scale) 针对的不是绘制的图形，而是针对画布本身
+这就是为什么感觉只有方块变大了。但是背景没有变大，因为画布本身就只有200x400
+多次scale，是相乘的作用
+
+requestAnimationFrame每一帧都更新
