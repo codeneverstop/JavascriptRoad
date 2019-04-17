@@ -1,4 +1,4 @@
-2019/04/14
+﻿2019/04/14
 1.看Tetris 看到了 17分钟
 学习了：
 1、canvas的初始化 
@@ -21,3 +21,41 @@ https://www.twle.cn/l/yufei/canvas/canvas-basic-geometric-scale.html
 多次scale，是相乘的作用
 
 requestAnimationFrame每一帧都更新
+
+matrix 的foreach
+canvas的context的update
+
+requestAnimationFrame 是系统自带的函数
+update函数有默认参数time = 0
+而且time 还在变 console.log打印的
+为什么time在变呢？
+
+还有不用var，而用let定义一个变量
+
+用了好多=>的操作
+document.addEventListener(‘keydown’, event => { });
+event.keyCode
+这个叫箭头函数
+匿名函数，箭头函数都不支持remove
+
+哈哈 他自己有一个看keycode的网页
+
+创建二维数组，在初始化的时候调用了
+matrix.push(new Array(x).fill(y));
+
+console.table(二维数组）可以在浏览器debug窗口打出数据
+
+const [m, o] = [player.matrix,  player.pos];
+交换
+[a, b] = [b, a];
+二维数组中xy yx和 yx xy换位置
+
+var和let的区别？
+rotate函数的两个reverse？知道了
+
+Math.random(); [0, 1]小数
+再或0就可以得整数
+
+数组的fill函数是把所有元素置成某个值，不会添加？
+
+debugger
