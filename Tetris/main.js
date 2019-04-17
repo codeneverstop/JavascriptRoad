@@ -32,6 +32,36 @@ function drawMatrix(matrix, offset){
 	});
 }
 
+function rotate(matrix, dir){
+	for (let y = 0; y < matrix.length; y++){
+		for (let x = 0; x < y; x++){
+			[
+				matrix[x][y],
+				matrix[y][x],
+			] = [
+				matrix[y][x],
+				matrix[x][y],
+			]
+		}
+	}
+
+	//TODO: dir should be an enum
+	if (dir > 0){
+		matrix.forEach(row => row.reverse());
+	} else {
+		matrix.reverse(); 
+	}
+}
+
+function playerRotate(dir) {
+	rotate(player.matrix, dir);
+	if (collide(arena, player)){
+		rotate(player.matrix, -dir);
+
+		//这里在视频里面不是直接不让rotate
+	}
+}
+
 function playerDrop(){
 	player.pos.y++;
 	if (collide(arena, player)){
@@ -60,23 +90,7 @@ function collide(arena, player){
 	const [pos, matrix] = [player.pos, player.matrix];
 	
 	/*
-	collide_flag = false;
-	matrix.forEach((row, y) => {
-		row.forEach((value, x) => {
-			//if (arena[y + pos.y][x + pos.x] !== 0)
-			console.log("+pos origin(" + y + ", " + x + "), matrix pos is " + matrix[y][x]);
-			//console.log("pos real(" + (pos.y + y) + ", " + (pos.x + x) +"), arena real pos is " + arena[y + pos.y][x + pos.x]);
-			if (matrix[y][x] !== 0)
-			{
-				if((arena[y + pos.y] && arena[y + pos.y][x + pos.x]) !== 0)
-				{
-					console.log("+collied");
-					collide_flag = true;  //在这里break是没有用的，因为这里forEach是个函数，是肯定都要执行的。 所以这里用forEach不合适。
-				}
-			}
-		});
-	});
-	return collide_flag;
+	在forEach里break是没有用的，因为这里forEach是个函数，是肯定都要执行的。 所以这里用forEach不合适。
 	*/
 	
 	for (let y = 0; y < matrix.length; ++y){
@@ -141,6 +155,10 @@ document.addEventListener('keydown', event => {
 		}
 	} else if (event.keyCode === 40){
 		playerDrop();
+	} else if (event.keyCode === 81){
+		playerRotate(-1);
+	} else if (event.keyCode === 87){
+		playerRotate(1);
 	}
 
 });
