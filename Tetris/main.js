@@ -2,10 +2,45 @@ const canvas_bkg = document.getElementById('bkg');
 const context_bkg = canvas_bkg.getContext('2d');    /*never change*/
 
 const matrix = [
+[
 	[0, 0, 0],
 	[1, 1, 1],
 	[0, 1, 0],
+],
+[
+	[2, 2],
+	[2, 2],
+],
+[
+	[0, 3, 0, 0],
+	[0, 3, 0, 0],
+	[0, 3, 0, 0],
+	[0, 3, 0, 0],
+],
+[
+	[4, 0, 0],
+	[4, 0, 0],
+	[4, 4, 0],
+],
+[
+	[0, 0, 5],
+	[0, 0, 5],
+	[0, 5, 5],
+],
+[
+	[6, 6, 0],
+	[0, 6, 6],
+	[0, 0, 0],
+],
+[
+	[0, 7, 7],
+	[7, 7, 0],
+	[0, 0, 0],
+],
+
 ];
+
+const colorarr = ['red', 'blue', 'yellow', 'pink', 'purple', 'cyan', 'gray'];
 
 context_bkg.scale(20, 20);
 
@@ -24,7 +59,7 @@ function drawMatrix(matrix, offset){
 		row.forEach((value, x) => {
 			if (value !== 0){
 				//console.log("x is " + x + " y is " + y + ", value is " + value);
-				context_bkg.fillStyle = 'red';
+				context_bkg.fillStyle = colorarr[value];
 				context_bkg.fillRect(x + offset.x, y + offset.y, 1, 1);
 				//context_bkg.fillRect(x * 20, y * 20, 20, 20); 等于scale 20
 			}
@@ -62,6 +97,16 @@ function playerRotate(dir) {
 	}
 }
 
+function playerReset()
+{
+	player.pos.y = 0;
+	player.pos.x = canvas_bkg.width / 20 / 2 - 1;
+	//A NEW RECT
+	var type = Math.random() * colorarr.length | 0;
+	console.log("type is " + type);
+	player.matrix = matrix[type];
+}
+
 function playerDrop(){
 	player.pos.y++;
 	if (collide(arena, player)){
@@ -69,7 +114,12 @@ function playerDrop(){
 		player.pos.y--;
 		merge(arena, player);
 		//start again
-		player.pos.y = 0;
+		playerReset();
+		if (collide(arena, player))
+		{
+			//TODO: back to menu
+			console.log("GAME OVER!");
+		}
 	}
 	dropCounter = 0;
 }
@@ -95,7 +145,7 @@ function collide(arena, player){
 	
 	for (let y = 0; y < matrix.length; ++y){
 		for (let x = 0; x < matrix[y].length; ++x){
-			console.log("-pos origin(" + y + ", " + x + "), matrix pos is " + matrix[y][x]);
+			//console.log("-pos origin(" + y + ", " + x + "), matrix pos is " + matrix[y][x]);
 			if (matrix[y][x] !== 0 && 
 				(arena[y + pos.y] && 
 				arena[y + pos.y][x + pos.x]) !== 0){
@@ -109,7 +159,7 @@ function collide(arena, player){
 
 const player = {
 	pos: {x: 2, y: 2},  //属性是冒号
-	matrix: matrix,     //最后是逗号
+	matrix: matrix[0],     //最后是逗号
 }  //没有分号
 
 const arena = createMatrix(12, 20);
