@@ -59,7 +59,7 @@ function drawMatrix(matrix, offset){
 		row.forEach((value, x) => {
 			if (value !== 0){
 				//console.log("x is " + x + " y is " + y + ", value is " + value);
-				context_bkg.fillStyle = colorarr[value];
+				context_bkg.fillStyle = colorarr[value - 1];
 				context_bkg.fillRect(x + offset.x, y + offset.y, 1, 1);
 				//context_bkg.fillRect(x * 20, y * 20, 20, 20); 等于scale 20
 			}
@@ -102,7 +102,7 @@ function playerReset()
 	player.pos.y = 0;
 	player.pos.x = canvas_bkg.width / 20 / 2 - 1;
 	//A NEW RECT
-	var type = Math.random() * colorarr.length | 0;
+	var type = Math.random() * colorarr.length| 0;
 	console.log("type is " + type);
 	player.matrix = matrix[type];
 }
@@ -118,6 +118,11 @@ function playerDrop(){
 		if (collide(arena, player))
 		{
 			//TODO: back to menu
+			for (var i = 0; i < arena.length; i++) {
+				for (var j = 0; j < arena[i].length; j++) {
+					arena[i][j] = 0;
+				}
+			}
 			console.log("GAME OVER!");
 		}
 	}
