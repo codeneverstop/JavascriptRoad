@@ -92,7 +92,6 @@ function playerRotate(dir) {
 	rotate(player.matrix, dir);
 	if (collide(arena, player)){
 		rotate(player.matrix, -dir);
-
 		//这里在视频里面不是直接不让rotate
 	}
 }
@@ -138,6 +137,19 @@ function merge(arena, player){
 			}
 		});
 	}); 
+}
+
+function eliminateArena()
+{
+	start: for (let y = 0; y < arena.length; y++){
+		for (let x = 0; x < arena[y].length; x++){
+			if (arena[y][x] === 0){
+				continue start;
+			}
+		}
+		arena.splice(y, 1);
+		arena.unshift(new Array(arena[0].length).fill(0));
+	}
 }
 
 /*判断对于arena来说 player的输入是外界输入，需要判断合法性*/
@@ -190,7 +202,7 @@ function update(time = 0){ //默认参数 单位为ms new
 	{
 		playerDrop();
 	}
-
+	eliminateArena();
 	draw();
 	requestAnimationFrame(update);
 }

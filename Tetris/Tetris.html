@@ -3,10 +3,23 @@
 <head>
 	<title>My tetris</title>
 	<!--link type="txt/javascript" src="main.js" -->
+	<style>
+		div {
+			text-align: center;
+		}
+		body {
+			background-color: #202028;
+		}
+		canvas {
+			border: solid white 2px;
+		}
+	</style>
 </head>
 <body>
 	<!--default is px-->
-	<canvas id="bkg" width="240px" height="400px"></canvas>
+	<div>
+		<canvas id="bkg" width="240px" height="400px"></canvas>
+	</div>
 	<!--have to be here after canvas block init-->
 	<script type="text/javascript" src="main.js"></script>
 </body>
