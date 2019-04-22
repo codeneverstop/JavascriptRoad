@@ -66,18 +66,18 @@ class Player
 	{
 		this.pos.y += height;
 
-		if (collide(arena, this)){
+		if (arena.isCollideWithPlayer(this)){
 			console.log("collide --------------------------");
 			this.pos.y--;
-			merge(arena, this);
+			arena.merge(this);
 			//start again
 			this.reset();
-			if (collide(arena, this))
+			if (arena.isCollideWithPlayer(this))
 			{
 				//TODO: back to menu
-				for (var i = 0; i < arena.length; i++) {
-					for (var j = 0; j < arena[i].length; j++) {
-						arena[i][j] = 0;
+				for (var i = 0; i < arena.arena.length; i++) {
+					for (var j = 0; j < arena.arena[i].length; j++) {
+						arena.arena[i][j] = 0;
 					}
 				}
 				console.log("GAME OVER!");

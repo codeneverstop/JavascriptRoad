@@ -25,91 +25,14 @@ function drawMatrix(matrix, offset){
 	});
 }
 
-function rotate(matrix, dir){
-	for (let y = 0; y < matrix.length; y++){
-		for (let x = 0; x < y; x++){
-			[
-				matrix[x][y],
-				matrix[y][x],
-			] = [
-				matrix[y][x],
-				matrix[x][y],
-			]
-		}
-	}
-
-	//TODO: dir should be an enum
-	if (dir > 0){
-		matrix.forEach(row => row.reverse());
-	} else {
-		matrix.reverse(); 
-	}
-}
-
-function playerRotate(dir) {
-	player.rotate(dir);
-	if (collide(arena, player)){
-		player.rotate(-dir);
-		//这里在视频里面不是直接不让rotate
-	}
-}
-
-function merge(arena, player){
-	const [pos, matrix] = [player.pos, player.block];
-	matrix.forEach((row, y) => {
-		row.forEach((value, x) => {
-			if (value !== 0){
-				arena[y + pos.y][x + pos.x] = value; //[0, 0] [0, 1] [0, 2] [1, 0] [1, 1] [1, 2]
-			}
-		});
-	}); 
-}
-
-function eliminateArena()
-{
-	start: for (let y = 0; y < arena.length; y++){
-		for (let x = 0; x < arena[y].length; x++){
-			if (arena[y][x] === 0){
-				continue start;
-			}
-		}
-		arena.splice(y, 1);
-		arena.unshift(new Array(arena[0].length).fill(0));
-	}
-}
-
-/*判断对于arena来说 player的输入是外界输入，需要判断合法性*/
-function collide(arena, player){
-	const [pos, matrix] = [player.pos, player.block];
-	
-	/*
-	在forEach里break是没有用的，因为这里forEach是个函数，是肯定都要执行的。 所以这里用forEach不合适。
-	*/
-	
-	for (let y = 0; y < matrix.length; ++y){
-		for (let x = 0; x < matrix[y].length; ++x){
-			//console.log("-pos origin(" + y + ", " + x + "), matrix pos is " + matrix[y][x]);
-			if (matrix[y][x] !== 0 && 
-				(arena[y + pos.y] && 
-				arena[y + pos.y][x + pos.x]) !== 0){
-				return true;
-			}
-		}
-	}
-	
-	return false;
-}
-
 const player = new Player({x: 2, y: 2}, 0);
-
-const arena = createMatrix(12, 20);
-
+const arena = new Arena(12, 20);
 
 function draw(){
 	/*renew back ground*/
 	context_bkg.fillStyle = '#000';
 	context_bkg.fillRect(0, 0, canvas_bkg.width, canvas_bkg.height);
-	drawMatrix(arena, {x: 0, y: 0});
+	drawMatrix(arena.arena, {x: 0, y: 0});
 	drawMatrix(player.block, player.pos);
 }
 
@@ -125,7 +48,7 @@ function update(time = 0){ //默认参数 单位为ms new
 	{
 		player.drop(1);
 	}
-	eliminateArena();
+	arena.eliminate();
 	draw();
 	requestAnimationFrame(update);
 }
@@ -133,13 +56,13 @@ function update(time = 0){ //默认参数 单位为ms new
 document.addEventListener('keydown', event => {
 	if (event.keyCode === 37){ // left
 		player.moveHorizontally(-1);
-		if (collide(arena, player))
+		if (arena.isCollideWithPlayer(player))
 		{
 			player.moveHorizontally(1);
 		}
 	} else if (event.keyCode === 39){
 		player.moveHorizontally(1);
-		if (collide(arena, player))
+		if (arena.isCollideWithPlayer(player))
 		{
 			player.moveHorizontally(-1);
 		}
