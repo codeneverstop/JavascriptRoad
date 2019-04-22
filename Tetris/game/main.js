@@ -1,49 +1,7 @@
 const canvas_bkg = document.getElementById('bkg');
 const context_bkg = canvas_bkg.getContext('2d');    /*never change*/
 
-const matrix = [
-[
-	[0, 0, 0],
-	[1, 1, 1],
-	[0, 1, 0],
-],
-[
-	[2, 2],
-	[2, 2],
-],
-[
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-],
-[
-	[4, 0, 0],
-	[4, 0, 0],
-	[4, 4, 0],
-],
-[
-	[0, 0, 5],
-	[0, 0, 5],
-	[0, 5, 5],
-],
-[
-	[6, 6, 0],
-	[0, 6, 6],
-	[0, 0, 0],
-],
-[
-	[0, 7, 7],
-	[7, 7, 0],
-	[0, 0, 0],
-],
-
-];
-
-const colorarr = ['red', 'blue', 'yellow', 'pink', 'purple', 'cyan', 'gray'];
-
 context_bkg.scale(20, 20);
-
 
 function createMatrix(width, height){
 	const matrix = [];   //为什么这个const可以被push？ 是因为这个只是const的“指针”吗
@@ -61,7 +19,7 @@ function drawMatrix(matrix, offset){
 				//console.log("x is " + x + " y is " + y + ", value is " + value);
 				context_bkg.fillStyle = colorarr[value - 1];
 				context_bkg.fillRect(x + offset.x, y + offset.y, 1, 1);
-				//context_bkg.fillRect(x * 20, y * 20, 20, 20); 等于scale 20
+				//context_bkg.fillRect(x * 20, y * 20, 20, 20); //等于scale 20
 			}
 		}); 
 	});
@@ -89,47 +47,15 @@ function rotate(matrix, dir){
 }
 
 function playerRotate(dir) {
-	rotate(player.matrix, dir);
+	player.rotate(dir);
 	if (collide(arena, player)){
-		rotate(player.matrix, -dir);
+		player.rotate(-dir);
 		//这里在视频里面不是直接不让rotate
 	}
 }
 
-function playerReset()
-{
-	player.pos.y = 0;
-	player.pos.x = canvas_bkg.width / 20 / 2 - 1;
-	//A NEW RECT
-	var type = Math.random() * colorarr.length| 0;
-	console.log("type is " + type);
-	player.matrix = matrix[type];
-}
-
-function playerDrop(){
-	player.pos.y++;
-	if (collide(arena, player)){
-		console.log("collide --------------------------");
-		player.pos.y--;
-		merge(arena, player);
-		//start again
-		playerReset();
-		if (collide(arena, player))
-		{
-			//TODO: back to menu
-			for (var i = 0; i < arena.length; i++) {
-				for (var j = 0; j < arena[i].length; j++) {
-					arena[i][j] = 0;
-				}
-			}
-			console.log("GAME OVER!");
-		}
-	}
-	dropCounter = 0;
-}
-
 function merge(arena, player){
-	const [pos, matrix] = [player.pos, player.matrix];
+	const [pos, matrix] = [player.pos, player.block];
 	matrix.forEach((row, y) => {
 		row.forEach((value, x) => {
 			if (value !== 0){
@@ -154,7 +80,7 @@ function eliminateArena()
 
 /*判断对于arena来说 player的输入是外界输入，需要判断合法性*/
 function collide(arena, player){
-	const [pos, matrix] = [player.pos, player.matrix];
+	const [pos, matrix] = [player.pos, player.block];
 	
 	/*
 	在forEach里break是没有用的，因为这里forEach是个函数，是肯定都要执行的。 所以这里用forEach不合适。
@@ -174,10 +100,7 @@ function collide(arena, player){
 	return false;
 }
 
-const player = {
-	pos: {x: 2, y: 2},  //属性是冒号
-	matrix: matrix[0],     //最后是逗号
-}  //没有分号
+const player = new Player({x: 2, y: 2}, 0);
 
 const arena = createMatrix(12, 20);
 
@@ -187,7 +110,7 @@ function draw(){
 	context_bkg.fillStyle = '#000';
 	context_bkg.fillRect(0, 0, canvas_bkg.width, canvas_bkg.height);
 	drawMatrix(arena, {x: 0, y: 0});
-	drawMatrix(player.matrix, player.pos);
+	drawMatrix(player.block, player.pos);
 }
 
 let lastTime = 0; //let ES6新增 块作用域 new
@@ -200,7 +123,7 @@ function update(time = 0){ //默认参数 单位为ms new
 	dropCounter += deltaTime;
 	if (dropCounter > dropInterval)
 	{
-		playerDrop();
+		player.drop(1);
 	}
 	eliminateArena();
 	draw();
@@ -209,23 +132,23 @@ function update(time = 0){ //默认参数 单位为ms new
 
 document.addEventListener('keydown', event => {
 	if (event.keyCode === 37){ // left
-		player.pos.x--;
+		player.moveHorizontally(-1);
 		if (collide(arena, player))
 		{
-			player.pos.x++;
+			player.moveHorizontally(1);
 		}
 	} else if (event.keyCode === 39){
-		player.pos.x++;
+		player.moveHorizontally(1);
 		if (collide(arena, player))
 		{
-			player.pos.x--;
+			player.moveHorizontally(-1);
 		}
 	} else if (event.keyCode === 40){
-		playerDrop();
+		player.drop(1);
 	} else if (event.keyCode === 81){
-		playerRotate(-1);
+		player.rotate(-1);
 	} else if (event.keyCode === 87){
-		playerRotate(1);
+		player.rotate(1);
 	}
 
 });
