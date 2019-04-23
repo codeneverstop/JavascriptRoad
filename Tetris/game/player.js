@@ -1,50 +1,10 @@
-const matrix_block = [
-[
-	[0, 0, 0],
-	[1, 1, 1],
-	[0, 1, 0],
-],
-[
-	[2, 2],
-	[2, 2],
-],
-[
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-	[0, 3, 0, 0],
-],
-[
-	[4, 0, 0],
-	[4, 0, 0],
-	[4, 4, 0],
-],
-[
-	[0, 0, 5],
-	[0, 0, 5],
-	[0, 5, 5],
-],
-[
-	[6, 6, 0],
-	[0, 6, 6],
-	[0, 0, 0],
-],
-[
-	[0, 7, 7],
-	[7, 7, 0],
-	[0, 0, 0],
-],
-
-];
-
-const colorarr = ['red', 'blue', 'yellow', 'pink', 'purple', 'cyan', 'gray'];
-
 class Player
 {
-	constructor(pos, matrix_type)
+	constructor(pos, matrix_type, arena)
 	{
 		this.pos = pos;
 		this.block = matrix_block[matrix_type];
+		this.arena = arena;
 	}
 
 	reset()
@@ -66,18 +26,18 @@ class Player
 	{
 		this.pos.y += height;
 
-		if (arena.isCollideWithPlayer(this)){
+		if (this.arena.isCollideWithPlayer(this)){
 			console.log("collide --------------------------");
 			this.pos.y--;
-			arena.merge(this);
+			this.arena.merge(this);
 			//start again
 			this.reset();
-			if (arena.isCollideWithPlayer(this))
+			if (this.arena.isCollideWithPlayer(this))
 			{
 				//TODO: back to menu
-				for (var i = 0; i < arena.arena.length; i++) {
-					for (var j = 0; j < arena.arena[i].length; j++) {
-						arena.arena[i][j] = 0;
+				for (var i = 0; i < this.arena.arena.length; i++) {
+					for (var j = 0; j < this.arena.arena[i].length; j++) {
+						this.arena.arena[i][j] = 0;
 					}
 				}
 				console.log("GAME OVER!");
