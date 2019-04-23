@@ -24,11 +24,19 @@
 			transform: translate(-50%, 50%);
 			
 		}
+
+		#score {
+			color: white;
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%, 0);
+		}
 	</style>
 </head>
 <body>
 	<!--default is px-->
 	<div>
+		<h1 id="score"></h1>
 		<canvas id="bkg" width="240px" height="400px"></canvas>
 	</div>
 	<!--have to be here after canvas block init-->

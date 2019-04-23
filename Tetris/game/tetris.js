@@ -21,7 +21,8 @@ class Tetris
 			{
 				this.player.drop(1);
 			}
-			this.arena.eliminate();
+			let row = this.arena.eliminate();
+			this.player.updateScore(row * 10);
 			this.draw();
 			requestAnimationFrame(update);
 		}
@@ -49,6 +50,7 @@ class Tetris
 		this.context_bkg.fillRect(0, 0, this.canvas_bkg.width, this.canvas_bkg.height);
 		this._drawMatrix(this.arena.arena, {x: 0, y: 0});
 		this._drawMatrix(this.player.block, this.player.pos);
+		this.document.getElementById("score").innerText = this.player.score;
 	}
 
 	tetrisAddEventListener(){

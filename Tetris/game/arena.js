@@ -35,6 +35,7 @@ class Arena
 
 	eliminate()
 	{
+		let row = 0;
 		start: for (let y = 0; y < this.arena.length; y++)
 		{
 			for (let x = 0; x < this.arena[y].length; x++)
@@ -46,7 +47,10 @@ class Arena
 			}
 			this.arena.splice(y, 1);
 			this.arena.unshift(new Array(this.arena[0].length).fill(0));
+			row += 1;
 		}
+
+		return row;
 	}
 
 	merge(player)

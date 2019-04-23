@@ -5,6 +5,7 @@ class Player
 		this.pos = pos;
 		this.block = matrix_block[matrix_type];
 		this.arena = arena;
+		this.score = 0;
 	}
 
 	reset()
@@ -41,6 +42,7 @@ class Player
 					}
 				}
 				console.log("GAME OVER!");
+				player.score = 0;
 			}
 		}
 		dropCounter = 0;
@@ -68,8 +70,8 @@ class Player
 		}
 	}
 
-	draw()
+	updateScore(score)
 	{
-
+		this.score += score;
 	}
 }
