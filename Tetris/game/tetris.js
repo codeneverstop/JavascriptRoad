@@ -1,6 +1,6 @@
 class Tetris
 {
-	constructor(htmlDocument, arena, player)
+	constructor(htmlDocument)
 	{
 		this.document = htmlDocument;
 		this.canvas_bkg = this.document.getElementById('bkg');
