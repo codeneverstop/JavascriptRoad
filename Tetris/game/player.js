@@ -12,9 +12,7 @@ class Player
 	{
 		this.pos.y = 2;
 		this.pos.x = 3;//canvas_bkg.width / 20 / 2 - 1;
-		//A NEW RECT
 		var type = Math.random() * colorarr.length| 0;
-		console.log("type is " + type);
 		this.block = matrix_block[type];
 	}
 
@@ -28,10 +26,8 @@ class Player
 		this.pos.y += height;
 
 		if (this.arena.isCollideWithPlayer(this)){
-			console.log("collide --------------------------");
 			this.pos.y--;
 			this.arena.merge(this);
-			//start again
 			this.reset();
 			if (this.arena.isCollideWithPlayer(this))
 			{
@@ -41,7 +37,6 @@ class Player
 						this.arena.arena[i][j] = 0;
 					}
 				}
-				console.log("GAME OVER!");
 				player.score = 0;
 			}
 		}

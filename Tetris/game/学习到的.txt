@@ -1,0 +1,39 @@
+div {
+	/*text-align: center;*/
+	position : relative;
+	/*border: solid 2px white;*/
+}
+canvas {
+	border: solid white 2px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, 50%);
+	
+}
+
+div是canvas的父block，这样可以实现垂直居中
+
+
+
+让两个框并排
+body {
+		background-color: #202028;
+		/*border: solid 2px yellow;*/
+		display: flex;
+		margin: 0;
+		text-align: center; /*这个很关键*/
+}
+
+canvas {
+	border: solid white 2px;
+	
+}
+
+.score {
+	color: white;
+}
+
+.game {
+	flex: 1 1 auto;
+}

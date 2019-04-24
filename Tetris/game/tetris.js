@@ -1,5 +1,8 @@
 class Tetris
 {
+	/* 这里传html的document就没意义，最终它是要画不同的tetris，canvas是不同的 包括class是game的div的里面的score等所有元素都是不同的
+		所以要改成传特定的game的div或者特定的canvas都可以
+	*/
 	constructor(htmlDocument)
 	{
 		this.document = htmlDocument;
@@ -50,7 +53,7 @@ class Tetris
 		this.context_bkg.fillRect(0, 0, this.canvas_bkg.width, this.canvas_bkg.height);
 		this._drawMatrix(this.arena.arena, {x: 0, y: 0});
 		this._drawMatrix(this.player.block, this.player.pos);
-		this.document.getElementById("score").innerText = this.player.score;
+		this.document.getElementById("score_0").innerText = this.player.score;
 	}
 
 	tetrisAddEventListener(){

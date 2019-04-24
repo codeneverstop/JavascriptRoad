@@ -7,37 +7,35 @@
 		body {
 				background-color: #202028;
 				/*border: solid 2px yellow;*/
-				height: 100%;
-				width: 100%;
+				display: flex;
 				margin: 0;
+				text-align: center; /*这个很关键*/
 		}
-		div {
-			/*text-align: center;*/
-			position : relative;
-			/*border: solid 2px white;*/
-		}
+
 		canvas {
 			border: solid white 2px;
-			position: absolute;
-			top:50%;
-			left:50%;
-			transform: translate(-50%, 50%);
 			
 		}
 
-		#score {
+		.score {
 			color: white;
-			position: absolute;
-			left: 50%;
-			transform: translate(-50%, 0);
+		}
+
+		.game {
+			flex: 1 1 auto;
 		}
 	</style>
 </head>
 <body>
 	<!--default is px-->
-	<div>
-		<h1 id="score"></h1>
+	<div class="game">
+		<h1 class="score" id="score_0">0</h1>
 		<canvas id="bkg" width="240px" height="400px"></canvas>
+	</div>
+
+	<div class="game">
+		<h1 class="score" id="score_1">0</h1>
+		<canvas id="bkg1" width="240px" height="400px"></canvas>
 	</div>
 	<!--have to be here after canvas block init-->
 	<script type="text/javascript" src="tetris.js"></script>
