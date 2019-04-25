@@ -3,10 +3,11 @@ class Tetris
 	/* 这里传html的document就没意义，最终它是要画不同的tetris，canvas是不同的 包括class是game的div的里面的score等所有元素都是不同的
 		所以要改成传特定的game的div或者特定的canvas都可以
 	*/
-	constructor(htmlDocument)
+	constructor(canvas)
 	{
-		this.document = htmlDocument;
-		this.canvas_bkg = this.document.getElementById('bkg');
+		this.p = 0;
+
+		this.canvas_bkg = canvas;
 		this.context_bkg = this.canvas_bkg.getContext('2d');    /*never change*/
 		this.context_bkg.scale(20, 20);
 
@@ -53,11 +54,13 @@ class Tetris
 		this.context_bkg.fillRect(0, 0, this.canvas_bkg.width, this.canvas_bkg.height);
 		this._drawMatrix(this.arena.arena, {x: 0, y: 0});
 		this._drawMatrix(this.player.block, this.player.pos);
-		this.document.getElementById("score_0").innerText = this.player.score;
+		document.getElementById("score_0").innerText = this.player.score;
 	}
 
+    
 	tetrisAddEventListener(){
-		this.document.addEventListener('keydown', event => {
+		//这里面的this就是Tetris
+		document.addEventListener('keydown', event => {
 			if (event.keyCode === 37){ // left
 				this.player.moveHorizontally(-1);
 				if (this.arena.isCollideWithPlayer(this.player))
@@ -74,10 +77,17 @@ class Tetris
 				this.player.drop(1);
 			} else if (event.keyCode === 81){
 				this.player.rotate(-1);
+				if (this.arena.isCollideWithPlayer(this.player))
+				{
+					this.player.rotate(1);
+				}
 			} else if (event.keyCode === 87){
 				this.player.rotate(1);
+				if (this.arena.isCollideWithPlayer(this.player))
+				{
+					this.player.rotate(-1);
+				}
 			}
-
 		});
 	}
 }

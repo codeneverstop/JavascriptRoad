@@ -39,8 +39,16 @@ const matrix_block = [
 
 const colorarr = ['red', 'blue', 'yellow', 'pink', 'purple', 'cyan', 'gray'];
 const dropInterval = 1000;
-
 let dropCounter = 0;
 
-const tetris = new Tetris(document);
+const tetris = [];
+var game_canvas;
+const playerElement = document.querySelectorAll('.game');
+[...playerElement].forEach((element) => {
+	game_canvas = element.querySelector('canvas');
+	const tetrisInstance = new Tetris(game_canvas);
+	tetris.push(tetrisInstance);
+});
+
+//const tetris = new Tetris(document);
 

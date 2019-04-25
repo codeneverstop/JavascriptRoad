@@ -1,4 +1,4 @@
-div {
+ï»¿div {
 	/*text-align: center;*/
 	position : relative;
 	/*border: solid 2px white;*/
@@ -12,17 +12,16 @@ canvas {
 	
 }
 
-divÊÇcanvasµÄ¸¸block£¬ÕâÑù¿ÉÒÔÊµÏÖ´¹Ö±¾ÓÖĞ
+divæ˜¯canvasçš„çˆ¶blockï¼Œè¿™æ ·å¯ä»¥å®ç°å‚ç›´å±…ä¸­
 
 
-
-ÈÃÁ½¸ö¿ò²¢ÅÅ
+ä¸¤ä¸ªblockå¹¶æ’
 body {
 		background-color: #202028;
 		/*border: solid 2px yellow;*/
 		display: flex;
 		margin: 0;
-		text-align: center; /*Õâ¸öºÜ¹Ø¼ü*/
+		text-align: center; /*å¾ˆå…³é”®*/
 }
 
 canvas {
