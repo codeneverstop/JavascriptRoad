@@ -50,5 +50,3 @@ const playerElement = document.querySelectorAll('.game');
 	tetris.push(tetrisInstance);
 });
 
-//const tetris = new Tetris(document);
-

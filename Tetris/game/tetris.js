@@ -5,8 +5,6 @@ class Tetris
 	*/
 	constructor(canvas)
 	{
-		this.p = 0;
-
 		this.canvas_bkg = canvas;
 		this.context_bkg = this.canvas_bkg.getContext('2d');    /*never change*/
 		this.context_bkg.scale(20, 20);
@@ -39,10 +37,8 @@ class Tetris
 		matrix.forEach((row, y) => {
 			row.forEach((value, x) => {
 				if (value !== 0){
-					//console.log("x is " + x + " y is " + y + ", value is " + value);
 					this.context_bkg.fillStyle = colorarr[value - 1];
 					this.context_bkg.fillRect(x + offset.x, y + offset.y, 1, 1);
-					//context_bkg.fillRect(x * 20, y * 20, 20, 20); //等于scale 20
 				}
 			}); 
 		});
@@ -61,6 +57,9 @@ class Tetris
 	tetrisAddEventListener(){
 		//这里面的this就是Tetris
 		document.addEventListener('keydown', event => {
+			/*
+				37 left arrow 39 right arrow 40 down arrow 81 q 87 e
+			*/
 			if (event.keyCode === 37){ // left
 				this.player.moveHorizontally(-1);
 				if (this.arena.isCollideWithPlayer(this.player))
