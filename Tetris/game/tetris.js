@@ -29,7 +29,6 @@ class Tetris
 			requestAnimationFrame(update);
 		}
 
-		this.tetrisAddEventListener();
 		update();
 	}
 
@@ -53,40 +52,4 @@ class Tetris
 		document.getElementById("score_0").innerText = this.player.score;
 	}
 
-    
-	tetrisAddEventListener(){
-		//这里面的this就是Tetris
-		document.addEventListener('keydown', event => {
-			/*
-				37 left arrow 39 right arrow 40 down arrow 81 q 87 e
-			*/
-			if (event.keyCode === 37){ // left
-				this.player.moveHorizontally(-1);
-				if (this.arena.isCollideWithPlayer(this.player))
-				{
-					this.player.moveHorizontally(1);
-				}
-			} else if (event.keyCode === 39){
-				this.player.moveHorizontally(1);
-				if (this.arena.isCollideWithPlayer(this.player))
-				{
-					this.player.moveHorizontally(-1);
-				}
-			} else if (event.keyCode === 40){
-				this.player.drop(1);
-			} else if (event.keyCode === 81){
-				this.player.rotate(-1);
-				if (this.arena.isCollideWithPlayer(this.player))
-				{
-					this.player.rotate(1);
-				}
-			} else if (event.keyCode === 87){
-				this.player.rotate(1);
-				if (this.arena.isCollideWithPlayer(this.player))
-				{
-					this.player.rotate(-1);
-				}
-			}
-		});
-	}
 }
