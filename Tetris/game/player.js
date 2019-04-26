@@ -37,7 +37,7 @@ class Player
 						this.arena.arena[i][j] = 0;
 					}
 				}
-				player.score = 0;
+				this.score = 0;
 			}
 		}
 		dropCounter = 0;

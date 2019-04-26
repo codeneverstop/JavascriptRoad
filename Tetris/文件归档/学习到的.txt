@@ -36,3 +36,22 @@ canvas {
 .game {
 	flex: 1 1 auto;
 }
+
+==============================
+var key = [
+	[65, 68, 81, 69, 83],
+	[72, 75, 89, 73, 74],
+];
+for (var i = 0; i < 2; i++)
+{
+	document.addEventListener('keydown', event => {
+		/*
+			37 left arrow 39 right arrow 40 down arrow 81 q 87 e
+		*/
+		console.log("i is " + i + ", key is " + key + ", value is " + key[0][0]);
+		if (event.keyCode === key[i][0]) 
+		....
+}
+
+这里会报错
+因为当真正出现keydown的到时候，i已经变成了3

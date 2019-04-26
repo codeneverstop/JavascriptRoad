@@ -56,38 +56,34 @@ function tetrisAddEventListener() {
         [65, 68, 81, 69, 83],
         [72, 75, 89, 73, 74],
 	];
-	for (var i = 0; i < 2; i++)
-	{
-	    document.addEventListener('keydown', event => {
-	        /*
-	    	    37 left arrow 39 right arrow 40 down arrow 81 q 87 e
-	        */
-	        if (event.keyCode === key[i][0]) 
+
+	key.forEach((value, i) => {
+		document.addEventListener('keydown', event => {
+		if (event.keyCode === value[0]) 
 	        { // left
 	    	    tetris[i].player.moveHorizontally(-1);
 	    	    if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {                                                                                                                                      	
 		    	    tetris[i].player.moveHorizontally(1);
 		        }
-	        } else if (event.keyCode === key[i][1]) {
+	        } else if (event.keyCode === value[1]) {
 		        tetris[i].player.moveHorizontally(1);
 		        if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 		    	    tetris[i].player.moveHorizontally(-1);
 		        }
-	        } else if (event.keyCode === key[i][4]) {
+	        } else if (event.keyCode === value[2]) {
 		         tetris[i].player.drop(1);
-	        } else if (event.keyCode === key[i][2]) {
+	        } else if (event.keyCode === value[3]) {
 		        tetris[i].player.rotate(-1);
 	            if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 		            tetris[i].player.rotate(1);
 	            }
-	        } else if (event.keyCode === key[i][3]) {
+	        } else if (event.keyCode === value[4]) {
 		        tetris[i].player.rotate(1);
 		        if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 			        tetris[i].player.rotate(-1);
 		        }
 	        }
-        });
-	}
+	    });
+	});
 }
-
 tetrisAddEventListener();
