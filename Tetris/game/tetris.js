@@ -3,7 +3,7 @@ class Tetris
 	/* 这里传html的document就没意义，最终它是要画不同的tetris，canvas是不同的 包括class是game的div的里面的score等所有元素都是不同的
 		所以要改成传特定的game的div或者特定的canvas都可以
 	*/
-	constructor(canvas)
+	constructor(canvas, index)
 	{
 		this.canvas_bkg = canvas;
 		this.context_bkg = this.canvas_bkg.getContext('2d');    /*never change*/
@@ -11,6 +11,7 @@ class Tetris
 
 		this.arena = new Arena(12, 20);
 		this.player = new Player({x: 2, y: 2}, 0, this.arena);
+		this.index = index;
 
 		let lastTime = 0;
 		
@@ -49,7 +50,7 @@ class Tetris
 		this.context_bkg.fillRect(0, 0, this.canvas_bkg.width, this.canvas_bkg.height);
 		this._drawMatrix(this.arena.arena, {x: 0, y: 0});
 		this._drawMatrix(this.player.block, this.player.pos);
-		document.getElementById("score_0").innerText = this.player.score;
+		document.getElementById("score_" + this.index).innerText = this.player.score;
 	}
 
 }

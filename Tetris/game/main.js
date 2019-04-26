@@ -44,9 +44,9 @@ let dropCounter = 0;
 const tetris = [];
 var game_canvas;
 const playerElement = document.querySelectorAll('.game');
-[...playerElement].forEach((element) => {
+[...playerElement].forEach((element, index) => {
 	game_canvas = element.querySelector('canvas');
-	const tetrisInstance = new Tetris(game_canvas);
+	const tetrisInstance = new Tetris(game_canvas, index);
 	tetris.push(tetrisInstance);
 });
 
@@ -70,14 +70,14 @@ function tetrisAddEventListener() {
 		        if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 		    	    tetris[i].player.moveHorizontally(-1);
 		        }
-	        } else if (event.keyCode === value[2]) {
+	        } else if (event.keyCode === value[4]) {
 		         tetris[i].player.drop(1);
-	        } else if (event.keyCode === value[3]) {
+	        } else if (event.keyCode === value[2]) {
 		        tetris[i].player.rotate(-1);
 	            if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 		            tetris[i].player.rotate(1);
 	            }
-	        } else if (event.keyCode === value[4]) {
+	        } else if (event.keyCode === value[3]) {
 		        tetris[i].player.rotate(1);
 		        if (tetris[i].arena.isCollideWithPlayer(tetris[i].player)) {
 			        tetris[i].player.rotate(-1);
