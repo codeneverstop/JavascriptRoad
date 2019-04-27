@@ -37,6 +37,9 @@ const matrix_block = [
 
 ];
 
+const connectionManager = new ConnectionManager();
+connectionManager.connect("ws://localhost:9000");
+
 const colorarr = ['red', 'blue', 'yellow', 'pink', 'purple', 'cyan', 'gray'];
 const dropInterval = 1000;
 let dropCounter = 0;
