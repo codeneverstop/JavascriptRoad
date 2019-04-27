@@ -55,3 +55,29 @@ for (var i = 0; i < 2; i++)
 
 这里会报错
 因为当真正出现keydown的到时候，i已经变成了3
+
+===================================
+module.export('xxx')
+
+const XXX = require('xxx'); //这个xxx就像一个类
+
+==================================
+打印 console.log("message is $(msg)");
+==================================
+connection后会获取到一个conn
+这个conn有send方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,3 +16,19 @@ replace block by png
 
 ======================================
 web server
+
+clientManager
+
+server
+
+client
+{
+    this.conn
+    this.session 存了所有的
+}
+
+session
+{
+    id
+  
+}
