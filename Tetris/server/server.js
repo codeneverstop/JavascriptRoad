@@ -8,6 +8,8 @@
 
 const wbSocket = require('ws').Server
 const Session = require('./session');
+const Client = require('./client');
+const sessions = new Map;
 
 /* 姑且认为wbSocket是一个工厂模式 它就是所有实例化的类*/
 const webServer = new wbSocket({port:9000});
@@ -15,7 +17,7 @@ const webServer = new wbSocket({port:9000});
 /* 首先监听connection事件，获取连接 */
 webServer.on('connection', conn => {
 	console.log(conn + " established");
-
+	client = new Client(conn);
 	conn.on('message', msg => {
 		console.log("get message from client:" + msg);
 
@@ -24,6 +26,8 @@ webServer.on('connection', conn => {
 			console.log('server get create-session');
 			var tempsession = new Session('123aaa');
 			console.log(`11create session is ${tempsession}`);
+			tempsession.join(client);
+			sessions.set(session.id, session);
 		}
 	})
 
