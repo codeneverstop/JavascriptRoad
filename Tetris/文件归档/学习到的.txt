@@ -66,10 +66,47 @@ const XXX = require('xxx'); //这个xxx就像一个类
 ==================================
 connection后会获取到一个conn
 这个conn有send方法
+=================================
+nodejs的建链事件触发流程：
 
+server端：
+require wc的Server，然后得到一个变量，当成是一个类明
+然后new一个刚刚得到的类名的变量，并且传入端口new xx({port:9000});
 
+然后用这个变量监听事件,监听函数为on,事件有 connection， 自己写回调。
 
+client端:
+自己创建一个 WebSocket 类，传入server端地址，返回的就是连接。
+监听open事件。
 
+server端，监听到connection事件以后，返回给server端一个连接
+然后再在连接上监听其他事件
+比如 conn.on('message',callback); conn.on('close', callback);
+
+client端：
+server端如果有connection事件以后，open事件也会被触发。
+在这里之后，client就可以用连接的send给server发消息了。
+
+server端：
+server端监听了message事件，所以说后续交互就用message事件来处理。
+
+client端:
+退出
+
+server端:
+监听到了退出事件，然后自己处理自己的
+=====================================
+如果说几个js文件里面，定义了不同的类，但是一个文件需要用另一个文件的类
+
+需要首先导出需要用的类：
+module.exports = Client;
+
+然后在用的地方
+const Client = require('./xxx/xxx/client'); //路径，然后最后不带js后缀
+======================================
+打印一个变量，带参数就像linux一样
+需要用的是``符号 然后${variable}
+======================================
 
 
 
