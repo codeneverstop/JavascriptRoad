@@ -4,6 +4,8 @@
 
 	session的join就是把client加入自己的set里
 	session的leave就是把client踢出自己的set里
+
+	session感觉扮演的是房间的角色
 */
 
 class Session

@@ -43,8 +43,10 @@ webServer.on('connection', conn => {
 				type : "session-created",
 				id : tempsession.id
 			});
-		} else if (data.type == '13') {
-
+		} else if (data.type == 'join-session') {
+			const session = sessions.get(data.id);
+			session.join(client); /*这个地方还有看得到client哦*/
+			console.log("session clients are " + session.clients.size);
 		}
 	})
 

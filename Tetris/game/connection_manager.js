@@ -10,15 +10,28 @@ class ConnectionManager {
 		this.conn.addEventListener('open', () => {
 			console.log('conn established');
 			/*create-session已经是程序自己指定的来*/
-			this.send({
-				type: 'create-session',
-			});
+			this.initSession();
 		});
 
 		this.conn.addEventListener('message', event => {
 			console.log("receive message:" + event.data);
 			this.receive(event.data);
 		});
+	}
+
+	initSession() {
+		/*获取url的#后面的所有的内容*/
+		const sessionId = window.location.hash.split('#')[1];
+		if (sessionId) { 
+			this.send({
+				type: "join-session",
+				id: sessionId,
+			});
+		} else {
+			this.send({
+				type: 'create-session',
+			});
+		}
 	}
 
 	receive(msg) {
