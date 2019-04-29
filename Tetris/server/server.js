@@ -14,25 +14,49 @@ const sessions = new Map;
 /* 姑且认为wbSocket是一个工厂模式 它就是所有实例化的类*/
 const webServer = new wbSocket({port:9000});
 
+function createId(len = 6, chars = "abcdefghijklmnopqrstuvwxyz1234567890")
+{
+	var id = '';
+	for (var i = 0; i < 6; i++)
+	{
+		id += chars[chars.length * Math.random() | 0];
+	}
+
+	return id;
+}
+
 /* 首先监听connection事件，获取连接 */
 webServer.on('connection', conn => {
 	console.log(conn + " established");
 	client = new Client(conn);
 	conn.on('message', msg => {
 		console.log("get message from client:" + msg);
-
-		if (msg == 'create-session')
-		{
-			console.log('server get create-session');
-			var tempsession = new Session('123aaa');
-			console.log(`11create session is ${tempsession}`);
+		const data = JSON.parse(msg);
+		if (data.type == 'create-session') {
+			var id = createId();
+			console.log('server get create-session, new id is ' + id);
+			var tempsession = new Session(id);
 			tempsession.join(client);
-			sessions.set(session.id, session);
+			sessions.set(tempsession.id, tempsession); //如果这个id已经对应过一个session，就会覆盖之前的
+			console.log(sessions);
+			client.send({
+				type : "session-created",
+				id : tempsession.id
+			});
+		} else if (data.type == '13') {
+
 		}
 	})
 
 	/*关闭事件，都是conn来注册了*/
 	conn.on('close', () => {
 		console.log("client closed");
+		const session = client.session;
+		if (session) {
+			session.leave(client);
+			if (session.clients.size === 0) {
+				sessions.delete(session.id);
+			}
+		}
 	});
 });
