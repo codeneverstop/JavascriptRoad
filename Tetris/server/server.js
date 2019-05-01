@@ -52,13 +52,13 @@ webServer.on('connection', conn => {
 
 	/*关闭事件，都是conn来注册了*/
 	conn.on('close', () => {
-		console.log("client closed");
-		const session = client.session;
+		const session = client.session; //注意，这个client是在webServer的on这个函数内的
 		if (session) {
 			session.leave(client);
 			if (session.clients.size === 0) {
 				sessions.delete(session.id);
 			}
+			console.log("client closed, session clients are " + session.clients.size);
 		}
 	});
 });
